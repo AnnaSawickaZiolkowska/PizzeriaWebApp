@@ -7,7 +7,7 @@ const getPizzaData = async () => {
   return response.json();
 };
 
- (async () => {
+(async () => {
   try {
     const json = await getPizzaData();
     renderData(json);
@@ -40,6 +40,30 @@ const renderData = (json) => {
   document.querySelector(".products").insertAdjacentHTML("afterbegin", html);
 };
 
+// RENDER PRODUCTS IN CART
+const renderCartProducts = () => {
+  const cartProducts = cart
+    .map(({ title, price, quantity, id }) => {
+      return `
+          <div class="cart__content"> 
+              <div class="flex__container">
+                  <h3>${title}</h3>
+                  <h3>${price} zł</h3>
+              </div>
+              <div class="flex__container">
+                  <p>ilość:</p>
+                  <p>${quantity} szt.</p>
+              </div>
+              <button
+              type="button" class="description__btn description__btn--delete" data-id="${id} id="removeBtn">usuń</button> 
+          </div> 
+          `;
+    })
+    .join(" ");
+
+  document.querySelector(".cart__product").innerHTML = cartProducts;
+};
+
 // TOGGLE CART VIEW
 const toggleCartView = () => {
   document.querySelector(".cart__product").classList.toggle("hidden");
@@ -47,8 +71,21 @@ const toggleCartView = () => {
   document.querySelector(".cart__btn").classList.toggle("hidden");
 };
 
+// LOCAL STORAGE
+const localStorageCart = localStorage.getItem("cart");
+
+// SAVE TO LOCAL STORAGE
+const saveToLocalStorage = () => {
+  localStorage.setItem("cart", JSON.stringify(cart));
+};
+
 // CART ARRAY
-let cart = [];
+let cart = localStorageCart ? JSON.parse(localStorageCart) : [];
+
+if (cart.length > 0) {
+  toggleCartView();
+  renderCartProducts();
+}
 
 // ADD TO CART
 const addToCart = (json) => {
@@ -59,7 +96,6 @@ const addToCart = (json) => {
       }
       const clickedId = parseInt(e.target.dataset.id);
       const checkedProducts = json.find((product) => product.id === clickedId);
-
       if (cart.some((product) => product.id === clickedId)) {
         cart.forEach((product) => {
           if (product.id === clickedId) {
@@ -69,8 +105,7 @@ const addToCart = (json) => {
       } else {
         cart.push({ ...checkedProducts, quantity: 1 });
       }
-      renderTotalPrice();
-      renderCartProducts();
+      updateCart();
     });
   });
 };
@@ -89,34 +124,9 @@ const removeFromCart = () => {
           }
         }
       });
-      renderTotalPrice();
-      renderCartProducts();
+      updateCart();
     }
   });
-};
-
-// RENDER PRODUCTS IN CART
-const renderCartProducts = () => {
-  const cartProducts = cart
-    .map(({ title, price, quantity, id }) => {
-      return `
-        <div class="cart__content"> 
-            <div class="flex__container">
-                <h3>${title}</h3>
-                <h3>${price} zł</h3>
-            </div>
-            <div class="flex__container">
-                <p>ilość:</p>
-                <p>${quantity} szt.</p>
-            </div>
-            <button
-            type="button" class="description__btn description__btn--delete" data-id="${id} id="removeBtn">usuń</button> 
-        </div> 
-        `;
-    })
-    .join(" ");
-
-  document.querySelector(".cart__product").innerHTML = cartProducts;
 };
 
 // TOTAL PRICE
@@ -130,4 +140,11 @@ const renderTotalPrice = () => {
     toggleCartView();
   }
   document.querySelector("#subtotal").innerHTML = `${totalPrice.toFixed(2)} zł`;
+};
+
+// UPDATE CART
+const updateCart = () => {
+  renderTotalPrice();
+  renderCartProducts();
+  saveToLocalStorage();
 };
