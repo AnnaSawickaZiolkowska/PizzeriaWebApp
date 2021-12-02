@@ -2,19 +2,21 @@
 const url =
   "https://raw.githubusercontent.com/alexsimkovich/patronage/main/api/data.json";
 
-const fetchData = async () => {
+const getPizzaData = async () => {
+  const response = await fetch(url);
+  return response.json();
+};
+
+ (async () => {
   try {
-    const response = await fetch(url);
-    const json = await response.json();
+    const json = await getPizzaData();
     renderData(json);
     addToCart(json);
     removeFromCart();
-    return json;
   } catch (error) {
     console.log(error);
   }
-};
-fetchData();
+})();
 
 // RENDER DATA
 const renderData = (json) => {
