@@ -1,3 +1,5 @@
+"use strict";
+
 // FETCH JSON DATA
 const url =
   "https://raw.githubusercontent.com/alexsimkovich/patronage/main/api/data.json";
@@ -109,8 +111,8 @@ const addToCart = (json) => {
     });
   });
 };
-// REMOVE FROM CART
 
+// REMOVE FROM CART
 const removeFromCart = () => {
   document.querySelector(".cart").addEventListener("click", (e) => {
     if (e.target.classList.contains("description__btn--delete")) {
