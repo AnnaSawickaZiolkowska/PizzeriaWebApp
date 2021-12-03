@@ -22,7 +22,7 @@ const getPizzaData = async () => {
 
 // RENDER DATA
 const renderData = (json) => {
-  const html = json
+  const html = json.sort((a, b) => a.title.localeCompare(b.title))
     .map(({ title, id, price, image, ingredients }) => {
       return `
     <article class="product">
