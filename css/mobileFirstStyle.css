@@ -26,9 +26,10 @@ body {
 }
 .header {
   display: flex;
-  width: calc(100% - 40px);
+  width: calc(100% - 20px);
   height: 60px;
   justify-content: right;
+  padding-right: 10px;
 }
 .header__button {
   font-weight: bold;

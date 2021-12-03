@@ -156,9 +156,20 @@ const renderTotalPrice = () => {
   document.querySelector("#subtotal").innerHTML = `${totalPrice.toFixed(2)} zł`;
 };
 
+// TOTAL QUANTITY
+const getTotalQuantity = () => {
+  let totalQuantity = 0;
+  cart.reduce((total, product) => {
+    return (totalQuantity = total + product.quantity);
+  }, 0);
+
+  document.querySelector("#showCart").innerHTML = `Moje zamówienie: ${totalQuantity}`;
+};
+
 // UPDATE CART
 const updateCart = () => {
   renderTotalPrice();
   renderCartProducts();
   saveToLocalStorage();
+  getTotalQuantity();
 };
