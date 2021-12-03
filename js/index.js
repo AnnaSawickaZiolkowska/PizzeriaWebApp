@@ -42,6 +42,18 @@ const renderData = (json) => {
   document.querySelector(".products").insertAdjacentHTML("afterbegin", html);
 };
 
+// SHOW CART POPUP SMALL SCREEN
+const toggleCart = () => {
+  document.querySelector("#cart").classList.toggle("cart--hidden");
+  document.querySelector("#products").classList.toggle("cart--hidden");
+  document.querySelector("#showCart").classList.toggle("cart--hidden");
+  document.querySelector("#hideCart").classList.toggle("cart--hidden");
+};
+
+document.querySelector("#header").addEventListener("click", () => {
+  toggleCart();
+});
+
 // RENDER PRODUCTS IN CART
 const renderCartProducts = () => {
   const cartProducts = cart
@@ -49,12 +61,12 @@ const renderCartProducts = () => {
       return `
           <div class="cart__content"> 
               <div class="flex__container">
-                  <h3>${title}</h3>
-                  <h3>${price} zł</h3>
+                  <h3 class="cart__title">${title}</h3>
+                  <h3 class="cart__price">${price} zł</h3>
               </div>
               <div class="flex__container">
-                  <p>ilość:</p>
-                  <p>${quantity} szt.</p>
+                  <p class="cart__quantity">ilość:</p>
+                  <p class="cart__quantity">${quantity} szt.</p>
               </div>
               <button
               type="button" class="description__btn description__btn--delete" data-id="${id} id="removeBtn">usuń</button> 
