@@ -11,19 +11,30 @@
   </head>
   <body>
       <header class="header" id="header">
-        <button
-          class="header__button"
-          id="showCart"
-          type="button"
-        >
-          Moje zamówienie: 0
-        </button>
-        <button
-        class="header__button cart--hidden"
-        id="hideCart"
-        type="button"
-      >
-      &#935	      </button>
+        <form class="header__form">
+            <select class="header__select">
+                <option value="titleAZ">Nazwa - rosnąco</option>
+                <option value="titleZA">Nazwa - malejąco</option>
+                <option value="price0-9">Cena - rosnąco</option>
+                <option value="price9-0">Cena - malejąco</option>
+            </select>
+            <span><i class='bx bx-chevron-down'></i></span>
+        </form>
+        <div class="wrapper__button">
+            <button
+              class="header__button"
+              id="showCart"
+              type="button"
+            >
+              Moje zamówienie: 0
+            </button>
+            <button
+            class="header__button header__button--close cart--hidden"
+            id="hideCart"
+            type="button"
+          >
+          &#935	      </button>
+        </div>
       </header>
     <section class="wrapper">
       <section class="products" id="products"><!-- from JS --></section>

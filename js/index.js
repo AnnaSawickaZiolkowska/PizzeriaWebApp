@@ -50,9 +50,8 @@ const toggleCart = () => {
   document.querySelector("#hideCart").classList.toggle("cart--hidden");
 };
 
-document.querySelector("#header").addEventListener("click", () => {
-  toggleCart();
-});
+document.querySelector("#showCart").addEventListener("click", toggleCart);
+document.querySelector("#hideCart").addEventListener("click", toggleCart);
 
 // RENDER PRODUCTS IN CART
 const renderCartProducts = () => {
