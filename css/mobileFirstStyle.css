@@ -128,7 +128,7 @@ body {
   background-color: #fff;
   border-radius: 10px;
   display: grid;
-  grid-template-rows: 65px 1fr 75px;
+  grid-template-rows: 65px 1fr 110px;
   margin: 0 auto;
 }
 .cart--hidden {
@@ -176,6 +176,21 @@ body {
 .description__btn--cart span {
   font-size: 16px;
   padding: 0 15px;
+}
+.cart__btn {
+  display: grid;
+}
+
+.cart__btn--clear {
+  justify-self: right;
+  color: #fff;
+  width: fit-content;
+  height: 30px;
+  padding: 0 15px;
+  background-color: rgba(219,21,30);
+  border: 1px solid #000;
+  margin-top: 5px;
+  border-radius: 5px;
 }
 
 /* LARGER SCREEN */

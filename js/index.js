@@ -205,3 +205,9 @@ const updateCart = () => {
   saveToLocalStorage();
   getTotalQuantity();
 };
+
+// CLAER CART
+document.querySelector("#clearCart").addEventListener("click", () => {
+    cart = []
+    updateCart();
+})
