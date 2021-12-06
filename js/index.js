@@ -4,6 +4,9 @@
 const url =
   "https://raw.githubusercontent.com/alexsimkovich/patronage/main/api/data.json";
 
+let json;
+let selectedValue;
+
 const getPizzaData = async () => {
   const response = await fetch(url);
   return response.json();
@@ -11,30 +14,46 @@ const getPizzaData = async () => {
 
 (async () => {
   try {
-    const json = await getPizzaData();
-    renderData(json);
-    addToCart(json);
+    json = await getPizzaData();
+    sortJson();
+    addToCart();
     removeFromCart();
   } catch (error) {
     console.log(error);
   }
 })();
 
-// GET SELECT VALUE
-const getSelectValue = () => {
-    document.querySelector("#sortBy").addEventListener("change", e => {
-        const targetValue = e.target.value;
-        return targetValue;
-    });
+// GET SELECTED VALUE
+document.querySelector("#sortBy").addEventListener("change", (e) => {
+    selectedValue = e.target.value;
+    sortJson();
+    addToCart();
+});
+
+// SORTING PIZZAS
+const sortJson = () => {
+  if (
+    selectedValue === undefined ||
+    selectedValue === "" ||
+    selectedValue === "title-ASC"
+  ) {
+    json.sort((a, b) => a.title.localeCompare(b.title));
+  }
+  if (selectedValue === "title-DESC") {
+    json.sort((a, b) => b.title.localeCompare(a.title));
+  }
+  if (selectedValue === "price-ASC") {
+    json = json.sort((a, b) => a.price - b.price);
+  }
+  if (selectedValue === "price-DESC") {
+    json.sort((a, b) => b.price - a.price);
+  }
+  renderData();
 };
 
 // RENDER DATA
-const renderData = (json) => {
-    const selectValue = getSelectValue();
-    console.log(selectValue);
-
+const renderData = () => {
   const html = json
-    .sort((a, b) => a.title.localeCompare(b.title))
     .map(({ title, id, price, image, ingredients }) => {
       return `
     <article class="product">
@@ -51,7 +70,7 @@ const renderData = (json) => {
     `;
     })
     .join(" ");
-  document.querySelector(".products").insertAdjacentHTML("afterbegin", html);
+  document.querySelector(".products").innerHTML = html;
 };
 
 // SHOW CART POPUP SMALL SCREEN
@@ -113,7 +132,7 @@ if (cart.length > 0) {
 }
 
 // ADD TO CART
-const addToCart = (json) => {
+const addToCart = () => {
   document.querySelectorAll("#addBtn").forEach((btn) => {
     btn.addEventListener("click", (e) => {
       if (cart.length >= 0 && cart.length < 1) {
