@@ -20,9 +20,21 @@ const getPizzaData = async () => {
   }
 })();
 
+// GET SELECT VALUE
+const getSelectValue = () => {
+    document.querySelector("#sortBy").addEventListener("change", e => {
+        const targetValue = e.target.value;
+        return targetValue;
+    });
+};
+
 // RENDER DATA
 const renderData = (json) => {
-  const html = json.sort((a, b) => a.title.localeCompare(b.title))
+    const selectValue = getSelectValue();
+    console.log(selectValue);
+
+  const html = json
+    .sort((a, b) => a.title.localeCompare(b.title))
     .map(({ title, id, price, image, ingredients }) => {
       return `
     <article class="product">
@@ -162,7 +174,9 @@ const getTotalQuantity = () => {
     return (totalQuantity = total + product.quantity);
   }, 0);
 
-  document.querySelector("#showCart").innerHTML = `Moje zamówienie: ${totalQuantity}`;
+  document.querySelector(
+    "#showCart"
+  ).innerHTML = `Moje zamówienie: ${totalQuantity}`;
 };
 
 // UPDATE CART
