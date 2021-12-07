@@ -6,6 +6,8 @@ const url =
 
 let json;
 let selectedValue;
+let searchValue;
+let filterJson = [];
 
 const getPizzaData = async () => {
   const response = await fetch(url);
@@ -15,7 +17,7 @@ const getPizzaData = async () => {
 (async () => {
   try {
     json = await getPizzaData();
-    sortJson();
+    sortJson(json);
     addToCart();
     removeFromCart();
   } catch (error) {
@@ -25,35 +27,52 @@ const getPizzaData = async () => {
 
 // GET SELECTED VALUE
 document.querySelector("#sortBy").addEventListener("change", (e) => {
-    selectedValue = e.target.value;
-    sortJson();
-    addToCart();
+  selectedValue = e.target.value;
+  searchValue ? sortJson(filterJson) : sortJson(json);
+  addToCart();
 });
 
 // SORTING PIZZAS
-const sortJson = () => {
+const sortJson = (jsonData) => {
+  let sortedJson;
   if (
     selectedValue === undefined ||
     selectedValue === "" ||
     selectedValue === "title-ASC"
   ) {
-    json.sort((a, b) => a.title.localeCompare(b.title));
+    sortedJson = jsonData.sort((a, b) => a.title.localeCompare(b.title));
   }
   if (selectedValue === "title-DESC") {
-    json.sort((a, b) => b.title.localeCompare(a.title));
+    sortedJson = jsonData.sort((a, b) => b.title.localeCompare(a.title));
   }
   if (selectedValue === "price-ASC") {
-    json = json.sort((a, b) => a.price - b.price);
+    sortedJson = jsonData.sort((a, b) => a.price - b.price);
   }
   if (selectedValue === "price-DESC") {
-    json.sort((a, b) => b.price - a.price);
+    sortedJson = jsonData.sort((a, b) => b.price - a.price);
   }
-  renderData();
+  renderData(sortedJson);
 };
 
+// FILTER BY INGREDIENTS
+const getFilteredJson = (json) => {
+  filterJson = json.filter((pizza) => {
+    return pizza.ingredients.join(", ").includes(searchValue);
+  });
+  renderData(filterJson);
+  return filterJson;
+};
+
+const searchInput = document.querySelector("#search");
+searchInput.addEventListener("input", (e) => {
+  e.preventDefault();
+  searchValue = e.target.value.toLowerCase();
+  getFilteredJson(json);
+});
+
 // RENDER DATA
-const renderData = () => {
-  const html = json
+const renderData = (jsonData) => {
+  const html = jsonData
     .map(({ title, id, price, image, ingredients }) => {
       return `
     <article class="product">
@@ -208,6 +227,6 @@ const updateCart = () => {
 
 // CLAER CART
 document.querySelector("#clearCart").addEventListener("click", () => {
-    cart = []
-    updateCart();
-})
+  cart = [];
+  updateCart();
+});
