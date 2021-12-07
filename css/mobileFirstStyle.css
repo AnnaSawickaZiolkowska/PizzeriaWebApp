@@ -21,9 +21,6 @@ body {
   display: flex;
   justify-content: space-between;
 }
-.hidden {
-  display: none;
-}
 .header {
   display: flex;
   margin: 0 auto;
@@ -180,7 +177,6 @@ body {
 .cart__btn {
   display: grid;
 }
-
 .cart__btn--clear {
   justify-self: right;
   color: #fff;
@@ -191,6 +187,9 @@ body {
   border: 1px solid #000;
   margin-top: 5px;
   border-radius: 5px;
+}
+.hidden {
+  display: none;
 }
 
 /* LARGER SCREEN */

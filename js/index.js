@@ -18,7 +18,6 @@ const getPizzaData = async () => {
   try {
     json = await getPizzaData();
     sortJson(json);
-    addToCart();
     removeFromCart();
   } catch (error) {
     console.log(error);
@@ -29,7 +28,6 @@ const getPizzaData = async () => {
 document.querySelector("#sortBy").addEventListener("change", (e) => {
   selectedValue = e.target.value;
   searchValue ? sortJson(filterJson) : sortJson(json);
-  addToCart();
 });
 
 // SORTING PIZZAS
@@ -90,6 +88,7 @@ const renderData = (jsonData) => {
     })
     .join(" ");
   document.querySelector(".products").innerHTML = html;
+  addToCart();
 };
 
 // SHOW CART POPUP SMALL SCREEN
@@ -124,7 +123,7 @@ const renderCartProducts = () => {
     })
     .join(" ");
 
-  document.querySelector(".cart__product").innerHTML = cartProducts;
+    document.querySelector(".cart__product").innerHTML = cartProducts;
 };
 
 // TOGGLE CART VIEW
@@ -144,11 +143,6 @@ const saveToLocalStorage = () => {
 
 // CART ARRAY
 let cart = localStorageCart ? JSON.parse(localStorageCart) : [];
-
-if (cart.length > 0) {
-  toggleCartView();
-  renderCartProducts();
-}
 
 // ADD TO CART
 const addToCart = () => {
@@ -219,11 +213,16 @@ const getTotalQuantity = () => {
 
 // UPDATE CART
 const updateCart = () => {
-  renderTotalPrice();
-  renderCartProducts();
-  saveToLocalStorage();
-  getTotalQuantity();
+    renderTotalPrice();
+    renderCartProducts();
+    saveToLocalStorage();
+    getTotalQuantity();
 };
+
+if (cart.length > 0) {
+    toggleCartView();
+    updateCart();
+  }
 
 // CLAER CART
 document.querySelector("#clearCart").addEventListener("click", () => {
