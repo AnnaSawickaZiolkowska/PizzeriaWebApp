@@ -8,6 +8,7 @@ let json;
 let selectedValue;
 let searchValue;
 let filterJson = [];
+let searchValueArray = [];
 
 const getPizzaData = async () => {
   const response = await fetch(url);
@@ -55,7 +56,12 @@ const sortJson = (jsonData) => {
 // FILTER BY INGREDIENTS
 const getFilteredJson = (json) => {
   filterJson = json.filter((pizza) => {
-    return pizza.ingredients.join(", ").includes(searchValue);
+    if (searchValueArray.length === 1) {
+      return pizza.ingredients.join(", ").includes(searchValue);
+    }
+    return searchValueArray.every((el) => {
+      return pizza.ingredients.includes(el.trim());
+    });
   });
   renderData(filterJson);
   return filterJson;
@@ -64,7 +70,26 @@ const getFilteredJson = (json) => {
 const searchInput = document.querySelector("#search");
 searchInput.addEventListener("input", (e) => {
   e.preventDefault();
-  searchValue = e.target.value.toLowerCase();
+  const target = e.target.value.toLowerCase();
+  searchValue = target;
+
+  if (target.endsWith(",")) {
+    searchValueArray = target.slice(0, -1).split(" ");
+  } else if (target.endsWith(" ,")) {
+    searchValueArray = target.trim();
+  } else if (target.includes(" ") && !target.endsWith(" ")) {
+    console.log(target.split(", "));
+    searchValueArray = target.split(", ");
+  } else if (target.endsWith(" ")) {
+    searchValueArray = target.split(" ");
+  } else if (!target.includes(" ") && target.endsWith(" ")) {
+    searchValueArray = target.split(" ");
+  } else {
+    searchValueArray = target.split(" ");
+  }
+
+
+  console.log(searchValueArray);
   getFilteredJson(json);
 });
 
@@ -123,7 +148,7 @@ const renderCartProducts = () => {
     })
     .join(" ");
 
-    document.querySelector(".cart__product").innerHTML = cartProducts;
+  document.querySelector(".cart__product").innerHTML = cartProducts;
 };
 
 // TOGGLE CART VIEW
@@ -213,16 +238,16 @@ const getTotalQuantity = () => {
 
 // UPDATE CART
 const updateCart = () => {
-    renderTotalPrice();
-    renderCartProducts();
-    saveToLocalStorage();
-    getTotalQuantity();
+  renderTotalPrice();
+  renderCartProducts();
+  saveToLocalStorage();
+  getTotalQuantity();
 };
 
 if (cart.length > 0) {
-    toggleCartView();
-    updateCart();
-  }
+  toggleCartView();
+  updateCart();
+}
 
 // CLAER CART
 document.querySelector("#clearCart").addEventListener("click", () => {
