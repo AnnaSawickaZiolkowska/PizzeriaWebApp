@@ -14,3 +14,7 @@
 * Reloading the page does not clear the cart - localStorage
 * The application is responsive according to the "mobile first" principle
 * Default sort by name: ascending (A-Z) - opening the page products are sorted
+* Filtering by ingredients - typing an ingredient refreshes the list of available pizzas.
+* Automatic filtering, user types and refreshes the list with no additional buttons / actions.
+* The user can enter multiple components by separating them with a comma. 
+* The comparison is only based on whether the component contains the text you typed.
