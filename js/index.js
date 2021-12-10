@@ -8,7 +8,6 @@ let json;
 let selectedValue;
 let searchValue;
 let filterJson = [];
-let searchValueArray = [];
 
 const getPizzaData = async () => {
   const response = await fetch(url);
@@ -54,15 +53,12 @@ const sortJson = (jsonData) => {
 };
 
 // FILTER BY INGREDIENTS
-const getFilteredJson = (json) => {
-  filterJson = json.filter((pizza) => {
-    if (searchValueArray.length === 1) {
-      return pizza.ingredients.join(", ").includes(searchValue);
-    }
-    return searchValueArray.every((el) => {
-      return pizza.ingredients.includes(el.trim());
-    });
-  });
+const getFilteredJson = (searchValueArray) => {
+  filterJson = json.filter((pizza) =>
+    searchValueArray.every((value) =>
+      pizza.ingredients.join().toLowerCase().includes(value)
+    )
+  );
   renderData(filterJson);
   return filterJson;
 };
@@ -70,27 +66,9 @@ const getFilteredJson = (json) => {
 const searchInput = document.querySelector("#search");
 searchInput.addEventListener("input", (e) => {
   e.preventDefault();
-  const target = e.target.value.toLowerCase();
-  searchValue = target;
-
-  if (target.endsWith(",")) {
-    searchValueArray = target.slice(0, -1).split(" ");
-  } else if (target.endsWith(" ,")) {
-    searchValueArray = target.trim();
-  } else if (target.includes(" ") && !target.endsWith(" ")) {
-    console.log(target.split(", "));
-    searchValueArray = target.split(", ");
-  } else if (target.endsWith(" ")) {
-    searchValueArray = target.split(" ");
-  } else if (!target.includes(" ") && target.endsWith(" ")) {
-    searchValueArray = target.split(" ");
-  } else {
-    searchValueArray = target.split(" ");
-  }
-
-
-  console.log(searchValueArray);
-  getFilteredJson(json);
+  searchValue = e.target.value.toLowerCase();
+  const searchValueArray = searchValue.split(",").map((item) => item.trim());
+  getFilteredJson(searchValueArray);
 });
 
 // RENDER DATA
