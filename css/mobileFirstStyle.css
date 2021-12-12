@@ -23,19 +23,21 @@ body {
 }
 .header {
   display: flex;
-  margin: 0 auto;
+  margin: 10px auto;
   width: calc(100% - 20px);
-  height: 80px;
+  height: fit-content;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 10px 10px 0;
+  padding: 10px 10px 5px 0;
   flex-wrap: wrap-reverse;
   gap: 10px;
 }
-.header__select,input {
-  width: fit-content;
+.header__select,
+input {
+  width: 170px;
   height: 30px;
   padding: 0 10px;
+  margin-bottom: 5px;
 }
 .header__button {
   font-weight: bold;
@@ -45,7 +47,6 @@ body {
 }
 .wrapper {
   display: grid;
-  gap: 15px;
   grid-template-columns: 1fr;
   margin: 0 auto;
   width: calc(100% - 20px);
@@ -120,8 +121,8 @@ body {
   width: 124px;
 }
 .cart {
-  width: calc(100% - 40px);
-  height: calc(100vh - 70px);
+  width: 95%;
+  max-width: 550px;
   background-color: #fff;
   border-radius: 10px;
   display: grid;
@@ -183,7 +184,7 @@ body {
   width: fit-content;
   height: 30px;
   padding: 0 15px;
-  background-color: rgba(219,21,30);
+  background-color: rgba(219, 21, 30);
   border: 1px solid #000;
   margin-top: 5px;
   border-radius: 5px;
@@ -195,14 +196,22 @@ body {
 /* LARGER SCREEN */
 
 @media screen and (min-width: 768px) {
+  .header {
+    height: 50px;
+  }
   .wrapper__button {
     display: none;
   }
   .wrapper {
-    grid-template-columns: minmax(430px, 1fr) minmax(288px, 384px);
+    grid-template-columns: minmax(350px, 1fr) 305px;
+    gap: 20px;
   }
   .products {
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    width: 100%;
+  }
+  .product {
+    width: 100%;
   }
   .description__btn {
     width: 124px;
@@ -216,10 +225,30 @@ body {
   .cart {
     position: sticky;
     top: 50px;
-    min-width: 288px;
-    max-width: 384px;
+    width: 100%;
+    height: calc(100vh - 70px);
   }
   .description__btn--cart {
     width: 100%;
+  }
+}
+
+@media screen and (min-width: 960px) {
+  .wrapper {
+    grid-template-columns: minmax(300px, 1fr) 305px;
+  }
+  .products {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .header,.wrapper {
+    width: 90%;
+    gap: 30px;
+  }
+  .products {
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 15px;
   }
 }
