@@ -1,6 +1,5 @@
 # Web App for Pizzeria
 
-
 * The page consists of a list of pizzas (in the middle) and a basket (on the right)
 * Each item on the pizza list contains an image, name, price, ingredients list and an "zamów" button
 * The list of pizzas is dynamically retrieved from the rest api
@@ -18,3 +17,14 @@
 * Automatic filtering, user types and refreshes the list with no additional buttons / actions.
 * The user can enter multiple components by separating them with a comma. 
 * The comparison is only based on whether the component contains the text you typed.
+
+## Live demo:
+https://annasawickaziolkowska.github.io/PizzeriaWebApp/
+
+## Tech stack
+* HTML5
+* CSS3
+* CSS Grid & CSS Flex
+* JavaScript ES6+
+* Local Storage
+* Rest API
