@@ -28,3 +28,4 @@ https://annasawickaziolkowska.github.io/PizzeriaWebApp/
 * JavaScript ES6+
 * Local Storage
 * Rest API
+* Mobile First
