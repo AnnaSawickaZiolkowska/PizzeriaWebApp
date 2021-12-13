@@ -35,9 +35,6 @@ const sortJson = (jsonData) => {
   let sortedJson;
 
   switch (selectedValue) {
-    case "title-ASC":
-      sortedJson = jsonData.sort((a, b) => a.title.localeCompare(b.title));
-      break;
     case "title-DESC":
       sortedJson = jsonData.sort((a, b) => b.title.localeCompare(a.title));
       break;
@@ -47,6 +44,7 @@ const sortJson = (jsonData) => {
     case "price-DESC":
       sortedJson = jsonData.sort((a, b) => b.price - a.price);
       break;
+    case "title-ASC":
     default:
       sortedJson = jsonData.sort((a, b) => a.title.localeCompare(b.title));
   }
