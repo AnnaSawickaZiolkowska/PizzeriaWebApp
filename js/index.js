@@ -33,21 +33,22 @@ document.querySelector("#sortBy").addEventListener("change", (e) => {
 // SORTING PIZZAS
 const sortJson = (jsonData) => {
   let sortedJson;
-  if (
-    selectedValue === undefined ||
-    selectedValue === "" ||
-    selectedValue === "title-ASC"
-  ) {
-    sortedJson = jsonData.sort((a, b) => a.title.localeCompare(b.title));
-  }
-  if (selectedValue === "title-DESC") {
-    sortedJson = jsonData.sort((a, b) => b.title.localeCompare(a.title));
-  }
-  if (selectedValue === "price-ASC") {
-    sortedJson = jsonData.sort((a, b) => a.price - b.price);
-  }
-  if (selectedValue === "price-DESC") {
-    sortedJson = jsonData.sort((a, b) => b.price - a.price);
+
+  switch (selectedValue) {
+    case "title-ASC":
+      sortedJson = jsonData.sort((a, b) => a.title.localeCompare(b.title));
+      break;
+    case "title-DESC":
+      sortedJson = jsonData.sort((a, b) => b.title.localeCompare(a.title));
+      break;
+    case "price-ASC":
+      sortedJson = jsonData.sort((a, b) => a.price - b.price);
+      break;
+    case "price-DESC":
+      sortedJson = jsonData.sort((a, b) => b.price - a.price);
+      break;
+    default:
+      sortedJson = jsonData.sort((a, b) => a.title.localeCompare(b.title));
   }
   renderData(sortedJson);
 };
