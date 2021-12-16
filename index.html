@@ -5,25 +5,58 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pizzeria Site</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="./css/mobileFirstStyle.css" />
+
     <script src="js/index.js" defer></script>
   </head>
   <body>
+      <header class="header" id="header">
+        <form class="header__form">
+            <select class="header__select" id="sortBy">
+                <option value="">SORTUJ WEDŁUG:</option>
+                <option value="title-ASC">Nazwa - rosnąco</option>
+                <option value="title-DESC">Nazwa - malejąco</option>
+                <option value="price-ASC">Cena - rosnąco</option>
+                <option value="price-DESC">Cena - malejąco</option>
+            </select>
+            <span><i class='bx bx-chevron-down'></i></span>
+            <label for="search"></label>
+            <input type="text" id="search" name="search" placeholder="szukaj po składnikach">
+        </form>
+        <div class="wrapper__button">
+            <button
+              class="header__button"
+              id="showCart"
+              type="button"
+            >
+              Moje zamówienie: 0
+            </button>
+            <button
+            class="header__button header__button--close cart--hidden"
+            id="hideCart"
+            type="button"
+          >
+          &#935	      </button>
+        </div>
+      </header>
     <section class="wrapper">
-      <section class="products"><!-- from JS --></section>
-      <section class="cart">
+      <section class="products" id="products"><!-- from JS --></section>
+      <section class="cart cart--hidden" id="cart">
         <h2 class="cart__header">Moje zamówienie</h2>
         <div class="cart__noOrder">
           <h3 class="cart__description">Głodny? Zamów naszą pizzę!</h3>
         </div>
         <div class="cart__product hidden"></div>
         <div class="cart__btn hidden">
-            <button class="description__btn description__btn--cart hidden"  type="submit">
-              <span>Razem do zapłaty</span> <span id="subtotal">0,00 zł</span>
-            </button>
-        </div>
+            <button
+            class="description__btn description__btn--cart"
+            type="submit"
+            >
+            <span>Razem do zapłaty</span> <span id="subtotal">0,00 zł</span>
+        </button>
+        <button class="cart__btn--clear" type="button" id="clearCart">wyczyść koszyk &#935</button>
+    </div>
       </section>
     </section>
   </body>
 </html>
-  
