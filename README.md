@@ -17,6 +17,7 @@
 * Automatic filtering, user types and refreshes the list with no additional buttons / actions.
 * The user can enter multiple components by separating them with a comma. 
 * The comparison is only based on whether the component contains the text you typed.
+* "use strict"
 
 ## Live demo:
 https://annasawickaziolkowska.github.io/PizzeriaWebApp/
